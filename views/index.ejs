@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HealNow Payments UI Demo</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <main>
+      <h1>HealNow Payments UI Demo</h1>
+      <form>
+        <div id="payment-form"></div>
+        <button id="pay-button" type="submit">Pay</button>
+      </form>
+    </main>
+    <script src="https://js.healnow.io/payments-ui/v1.0.0/"></script>
+    <script>
+      const card = PaymentsUI.card('<%= base_url %>', '<%= client_key %>');
+
+      // Mount payment form
+      card.mount('#payment-form');
+
+      // Tokenize card data on form submit
+      document.querySelector('form').addEventListener('submit', e => {
+        e.preventDefault();
+
+        card.tokenize().then(token => {
+          console.log('Card tokenized', token);
+
+          // Get card token and submit it to your backend to charge customer
+          submitPayment(token)
+            .then(response => {
+              console.log(response.status === 200 ? 'Payment successful' : 'Payment error');
+              return response.json();
+            }).then(response => console.log(response));
+        }).catch(message => {
+          console.log('Cannot tokenize form.', message.error);
+        });
+      });
+
+      const submitPayment = token => fetch('/payment', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ token })
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+# IDE
+/.idea
+
+# dependencies
+/node_modules
+
+# misc
+.DS_Store
+
+# build
+/out
+
+# local env files
+.env

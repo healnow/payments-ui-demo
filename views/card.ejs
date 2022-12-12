@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HealNow Payments UI Demo</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <main>
+      <h1>HealNow Payments UI Demo</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Create Payment</a></li>
+          <li><a href="/card">Save Card</a></li>
+        </ul>
+      </nav>
+      <form>
+        <label html-for="patient">Patient</label>
+        <select id=patient name="patient_id">
+          <option value="">-- Please Select --</option>
+        </select>
+        <div id="save-card-form"></div>
+        <button id="save-button" type="submit">Save Card</button>
+      </form>
+    </main>
+    <script src="https://js.healnow.io/payments-ui/v1.0.0/"></script>
+    <script>
+      const card = PaymentsUI.card('<%= base_url %>', '<%= client_key %>');
+
+      const patientInput = document.querySelector('#patient');
+
+      // Mount payment form
+      card.mount('#save-card-form');
+
+      // Populate patient select input
+      fetch('/api/patients')
+        .then(response => response.json())
+        .then(response => {
+          (response.data ?? []).forEach(({ id, first_name, last_name}) => {
+            const option = document.createElement('option');
+            option.value = id;
+            option.innerText = `${first_name} ${last_name}`;
+            patientInput.appendChild(option);
+          });
+        }).catch(message => {
+          console.log('Error: Failed fetching patients.', message.error);
+        });
+
+      // Tokenize card data on form submit
+      document.querySelector('form').addEventListener('submit', e => {
+        e.preventDefault();
+
+        const patient_id = patientInput.value;
+        if (patient_id.length === 0) {
+          console.log('Error: Patient not selected');
+          return;
+        }
+
+        card.tokenize().then(token => {
+          console.log('Card tokenized', token);
+
+          // Get card token and submit it to your backend to charge customer
+          saveCard(token, patientInput.value)
+            .then(response => {
+              console.log(response.status === 200 ? 'Card saved' : 'Error: Failed saving card');
+              return response.json();
+            }).then(response => console.log(response));
+        });
+      });
+
+      const saveCard = (token, patient_id) => fetch('/api/cards', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ token, patient_id })
+      })
+    </script>
+  </body>
+</html>

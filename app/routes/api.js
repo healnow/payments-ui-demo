@@ -9,6 +9,7 @@ module.exports = () => {
 
     // Make an API call to create an order
     axios.post(`${process.env.API_URL}/orders`, {
+      description: 'Test payment by John Doe',
       patient: {
         first_name: 'John',
         last_name: 'Doe',

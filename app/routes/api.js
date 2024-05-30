@@ -20,6 +20,9 @@ module.exports = () => {
         token: token,
         save: true
       },
+      meta: {
+        foo: 'bar'
+      },
       items: [
         {
           name: 'Line item 1',

@@ -14,7 +14,7 @@
     <script src="https://js.healnow.io/payments-ui/v1.0.0/"></script>
     <script>
       const initialize = (sessionId) => {
-        const checkout = PaymentsUI.checkout('<%= base_url %>', sessionId, { emailRequired: true });
+        const checkout = PaymentsUI.checkout('<%= base_url %>', sessionId);
 
         checkout.mount('#payment-form');
       }

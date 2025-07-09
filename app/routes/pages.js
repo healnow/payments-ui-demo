@@ -3,11 +3,7 @@ const express = require('express');
 module.exports = () => {
   const router = express.Router();
 
-  router.get('/checkout', (req, res) => {
-    res.render('checkout', {
-      base_url: process.env.CHECKOUT_URL
-    });
-  });
+  router.get('/checkout', (req, res) => res.render('checkout'));
 
   router.get('/', (req, res) => {
     res.render('index', {

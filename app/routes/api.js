@@ -7,23 +7,20 @@ module.exports = () => {
   router.post('/checkout-session', (req, res) => {
     // Make an API call to create an checkout session
     axios.post(`${process.env.API_URL}/checkout/sessions`, {
-        // eid: "35db90c0-e4b7-4563-a18f-a36c7eec55d9",
-        patient: {
-          // id: 'a4p0UanCoCqAufPn'
-          // eid: "62bf832b-bbbd-44ff-9417-cd4949c8362c",
-          first_name: "Jane",
-          last_name: "Doe",
-          dob: "1999-12-31",
-          phone: "+1111111111",
-          email: "jane@healnow.io"
-        },
-        items: [
-          {
-            name: "Line Item 1",
-            unit_price_in_cents: 699,
-            qty: 10
-          }
-        ]
+      patient: {
+        first_name: "Jane",
+        last_name: "Doe",
+        dob: "1999-12-31",
+        phone: "+1111111111",
+        email: "jane@healnow.io"
+      },
+      items: [
+        {
+          name: "Line Item 1",
+          unit_price_in_cents: 699,
+          qty: 10
+        }
+      ]
     }, {
       headers: {
         Authorization: `Bearer ${process.env.API_KEY}`

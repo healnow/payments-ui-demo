@@ -13,8 +13,8 @@
     </main>
     <script src="https://js.healnow.io/payments-ui/v1.0.0/"></script>
     <script>
-      const initialize = (sessionId) => {
-        const checkout = PaymentsUI.checkout('<%= base_url %>', sessionId);
+      const initialize = (checkoutUrl) => {
+        const checkout = PaymentsUI.checkout(checkoutUrl);
 
         checkout.mount('#payment-form');
       }
@@ -28,7 +28,7 @@
 
       createSession()
         .then(response => response.json())
-        .then(session => initialize(session.id))
+        .then(session => initialize(session.checkout_url))
         .catch(message => console.log('Error: Failed creating checkout session.', message.error));
     </script>
   </body>

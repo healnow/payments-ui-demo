@@ -4,6 +4,35 @@ const axios = require('axios');
 module.exports = () => {
   const router = express.Router();
 
+  router.post('/checkout-session', (req, res) => {
+    // Make an API call to create an checkout session
+    axios.post(`${process.env.API_URL}/checkout/sessions`, {
+      patient: {
+        first_name: "Jane",
+        last_name: "Doe",
+        dob: "1999-12-31",
+        phone: "+1111111111",
+        email: "jane@healnow.io"
+      },
+      items: [
+        {
+          name: "Line Item 1",
+          unit_price_in_cents: 699,
+          qty: 10
+        }
+      ]
+    }, {
+      headers: {
+        Authorization: `Bearer ${process.env.API_KEY}`
+      }
+    }).then(response => {
+      res.json(response.data);
+    }).catch(error => {
+      res.status(400);
+      res.json(error.response.data);
+    });
+  });
+
   router.post('/payments', (req, res) => {
     const { token } = req.body;
 

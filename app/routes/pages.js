@@ -3,6 +3,8 @@ const express = require('express');
 module.exports = () => {
   const router = express.Router();
 
+  router.get('/checkout', (req, res) => res.render('checkout'));
+
   router.get('/', (req, res) => {
     res.render('index', {
       client_key: process.env.CLIENT_KEY,

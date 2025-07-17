@@ -11,6 +11,7 @@
         <ul>
           <li><a href="/">Create Payment</a></li>
           <li><a href="/card">Save Card</a></li>
+          <li><a href="/checkout">Checkout</a></li>
         </ul>
       </nav>
       <form>
@@ -22,7 +23,7 @@
         <button id="save-button" type="submit">Save Card</button>
       </form>
     </main>
-    <script src="https://js.healnow.io/payments-ui/v1.0.0/"></script>
+    <script src="https://js.healnow.io/payments-ui/v1.1.0/"></script>
     <script>
       const card = PaymentsUI.card('<%= base_url %>', '<%= client_key %>');
 

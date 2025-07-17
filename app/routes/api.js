@@ -8,17 +8,15 @@ module.exports = () => {
     // Make an API call to create an checkout session
     axios.post(`${process.env.API_URL}/checkout/sessions`, {
       patient: {
-        first_name: "Jane",
-        last_name: "Doe",
-        dob: "1999-12-31",
-        phone: "+1111111111",
-        email: "jane@healnow.io"
+        first_name: 'Jane',
+        last_name: 'Doe',
+        dob: '1999-12-31',
       },
       items: [
         {
-          name: "Line Item 1",
-          unit_price_in_cents: 699,
-          qty: 10
+          name: 'Line Item 1',
+          unit_price_in_cents: 999,
+          qty: 1
         }
       ]
     }, {

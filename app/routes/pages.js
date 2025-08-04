@@ -19,10 +19,5 @@ module.exports = () => {
     });
   });
 
-  router.get('/.well-known/apple-developer-merchantid-domain-association', (req, res) => {
-    res.setHeader('Content-Type', 'application/octet-stream');
-    res.send(process.env.APPLE_PAY_DOMAIN_ASSOCIATION);
-  });
-
   return router
 };
